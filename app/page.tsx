@@ -1,65 +1,91 @@
-import Image from "next/image";
+// src/app/page.tsx
+import {
+  getTotalBookings,
+  getTotalRevenue,
+  getMostPopularRoute,
+  generateAIInsight
+} from '../lib/analytics';
 
-export default function Home() {
+export default function Dashboard() {
+  const totalBookings = getTotalBookings();
+  const totalRevenue = getTotalRevenue();
+  const popularRoute = getMostPopularRoute();
+  const aiInsight = generateAIInsight();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-slate-950 text-slate-50 p-8 font-sans relative overflow-hidden">
+      {/* Futuristic Background Glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
+        <header className="mb-12 border-b border-slate-800 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center font-bold shadow-[0_0_10px_rgba(99,102,241,0.5)] text-slate-900">
+              N
+            </div>
+            <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
+              NomadCore Command
+            </h1>
+          </div>
+          <p className="text-slate-400 mt-2 text-sm tracking-wide uppercase font-semibold">Real-time Telemetry & USSD Grid</p>
+        </header>
+
+        {/* The "Smart AI" Alert Card */}
+        <div className="relative mb-10 group">
+          {/* Animated border glow */}
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+          <div className="relative bg-slate-900 border border-slate-800 rounded-2xl p-8 backdrop-blur-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="flex h-3 w-3 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+              </span>
+              <span className="text-cyan-400 text-xs font-bold uppercase tracking-widest">
+                System Intelligence Active
+              </span>
+            </div>
+            <p className="text-xl font-light leading-relaxed text-slate-200 mb-6">
+              {aiInsight}
+            </p>
+            <button className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-all shadow-[0_0_15px_rgba(79,70,229,0.4)] hover:shadow-[0_0_25px_rgba(79,70,229,0.6)] flex items-center gap-2">
+              Execute Surge Protocol
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Top Level Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1 */}
+          <div className="bg-slate-900/50 backdrop-blur-md p-6 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Total Grid Bookings</h3>
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-500">{totalBookings}</p>
+          </div>
+
+          {/* Card 2 */}
+          <div className="bg-slate-900/50 backdrop-blur-md p-6 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Projected Revenue</h3>
+            <p className="text-4xl font-bold text-emerald-400 tracking-tight">₦{totalRevenue.toLocaleString()}</p>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-slate-900/50 backdrop-blur-md p-6 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors flex flex-col justify-between">
+            <div>
+              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Optimal Route</h3>
+              <p className="text-2xl font-bold text-white truncate">
+                {popularRoute.route?.origin} <span className="text-slate-600 px-1">→</span> {popularRoute.route?.destination}
+              </p>
+            </div>
+            <p className="text-sm text-cyan-400 font-medium mt-4 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+              {popularRoute.count} active signals
+            </p>
+          </div>
         </div>
-      </main>
+
+      </div>
     </div>
   );
 }
