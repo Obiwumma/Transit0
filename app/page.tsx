@@ -6,11 +6,14 @@ import {
   generateAIInsight
 } from '../lib/analytics';
 
-export default function Dashboard() {
+// Notice we added "async" right here!
+export default async function Dashboard() {
   const totalBookings = getTotalBookings();
   const totalRevenue = getTotalRevenue();
   const popularRoute = getMostPopularRoute();
-  const aiInsight = generateAIInsight();
+
+  // Notice we added "await" right here!
+  const aiInsight = await generateAIInsight();
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 p-8 font-sans relative overflow-hidden">

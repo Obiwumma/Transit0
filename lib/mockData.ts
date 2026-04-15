@@ -19,7 +19,7 @@ export type Booking = {
 
 // 2. Fake Routes (The buses we have)
 export const mockRoutes: Route[] = [
-  { id: 'r1', origin: 'Lagos', destination: 'Abuja', price: 15000, available_seats: 4 },
+  { id: 'r1', origin: 'Lagos', destination: 'Abuja', price: 15000, available_seats: 20 },
   { id: 'r2', origin: 'Lagos', destination: 'Ibadan', price: 5000, available_seats: 12 },
   { id: 'r3', origin: 'Port Harcourt', destination: 'Owerri', price: 4000, available_seats: 18 },
 ];

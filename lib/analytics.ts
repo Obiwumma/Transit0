@@ -43,11 +43,34 @@ export function getMostPopularRoute() {
 }
 
 // 4. The Hackathon Winner: The "Smart" AI Insight Generator
-export function generateAIInsight() {
+// Replace the old generateAIInsight function with this real AI connection
+export async function generateAIInsight() {
   const popular = getMostPopularRoute();
 
   if (!popular.route) return "Not enough data to generate insights.";
 
-  // This string simulates what an AI/Insights API would return to the business owner
-  return `Trend Alert: The ${popular.route.origin} to ${popular.route.destination} route is experiencing unusual high demand (${popular.count} recent bookings). Recommendation: Consider increasing the fare by 15% for the remaining ${popular.route.available_seats} seats to maximize profit, or schedule an overflow bus.`;
+  // 1. The Prompt Injection (giving the AI context)
+  const prompt = `You are an expert transport and logistics analyst.
+  Our data shows the ${popular.route.origin} to ${popular.route.destination} route is experiencing high demand with ${popular.count} recent bookings. We have ${popular.route.available_seats} seats remaining.
+  Write a maximum 2-sentence business recommendation for the transport owner on how to maximize profit right now. Keep it professional, actionable, and do not use formatting like bolding or asterisks.`;
+
+  try {
+    // 2. Call the real Gemini API
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+      })
+    });
+
+    const data = await response.json();
+
+    // 3. Extract and return the AI's smart text
+    return data.candidates[0].content.parts[0].text;
+
+  } catch (error) {
+    console.error("AI Error:", error);
+    return "System Offline: Unable to reach intelligence server. Please rely on manual surge protocol.";
+  }
 }
